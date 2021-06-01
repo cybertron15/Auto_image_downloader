@@ -234,10 +234,11 @@ class Downloader():
             img_link = link[start+1:end]
 
             # this are the symbold we want to replace from the links
-            symbols = {"%3A":":","%2F":"/","%3F":"?","%3D":"=","%26":"&",}
+            symbols = {"%3A":":","%2F":"/","%3F":"?","%3D":"=","%26":"&","%25":"%"}
             for keys,values in symbols.items():
                 img_link = img_link.replace(keys,values)
 
+            print(img_link)
             self.links.append(img_link)
         
         print("Done...")
@@ -280,3 +281,7 @@ if __name__ == "__main__":
     items = int(input("How many images you want to download: "))
     download = Downloader(search,items)
     download.download_images()
+
+"https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%2528cropped%2529.jpg"
+"https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg"
+
