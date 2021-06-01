@@ -238,24 +238,35 @@ class Downloader():
             for keys,values in symbols.items():
                 img_link = img_link.replace(keys,values)
 
-            print(img_link)
             self.links.append(img_link)
         
         print("Done...")
+
+
+    def assigning_extensions(self,links,index,extensions):
+        """on the web there are images with diffrent formats. so when we are storing
+        the images on our local memory we need to strore it in its original format"""
+
+        if links[-4:] in extensions:
+            image_name = f"{self.folder}/image{index+1}{links[-4:]}"
+        else:
+            image_name = f"{self.folder}/image{index+1}.jpg"
+
+        return image_name
 
 
     def download_images(self):
         while True:
             res = input(f"Do you want proceed with downloading {len(self.elements)} images?(y/n)")
             if res == "y":
-                folder = self.search
-
-                if not os.path.exists(folder):
-                    os.mkdir(folder)
+                self.folder = self.search
+                extensions = [".jpg",".JPG",".png",".PNG",".gif",".GIF"]
+                if not os.path.exists(self.folder):
+                    os.mkdir(self.folder)
                 print("Downloading Images...")
 
                 for i,links in enumerate(self.links):
-                    image_name = f"{folder}/image{i+1}.jpg"
+                    image_name = self.assigning_extensions(links,i,extensions)
 
                     with open(image_name,'wb') as file:
                         file.write(requests.get(links).content)
@@ -282,6 +293,5 @@ if __name__ == "__main__":
     download = Downloader(search,items)
     download.download_images()
 
-"https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%2528cropped%2529.jpg"
-"https://upload.wikimedia.org/wikipedia/commons/9/94/Robert_Downey_Jr_2014_Comic_Con_%28cropped%29.jpg"
+
 
