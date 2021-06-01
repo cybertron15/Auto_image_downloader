@@ -13,7 +13,14 @@ import time                                             # to halt the script whe
 
 class Downloader():
     """The main class for Google Image Dowloader"""
-    def __init__(self,search,items,headless=False,internet_speed="normal"):
+    def __init__(self,search,items,headless=True,internet_speed="normal"):
+        """
+        search: the images which you want to search
+        items: number of images you want
+        headless: whether you want to see a browser window or not, set to false if you want to see the window
+        internet_speed: according to your connection speed set it to 'very fast','fast','normal','slow','very slow','very very slow'
+
+        """
         self.search = search
         self.url = f"https://www.google.com/search?q={search}&tbm=isch"
 
@@ -268,8 +275,8 @@ class Downloader():
 
 
             
-
-search = input("What you want to download: ")
-items = int(input("How many images you want to download: "))
-download = Downloader(search,items,internet_speed="very slow")
-download.download_images()
+if __name__ == "__main__":
+    search = input("What you want to download: ")
+    items = int(input("How many images you want to download: "))
+    download = Downloader(search,items)
+    download.download_images()
