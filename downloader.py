@@ -188,8 +188,7 @@ class Downloader():
         this is done because until and unless you don't click on a image google 
         won't load the image URL of that image"""
 
-        self.elements = self.driver.find_elements_by_class_name("rg_i.Q4LuWd")
-
+        self.elements = self.driver.find_elements_by_class_name("bRMDJf.islir")
         # scrolling down if we have less items than we need
         if len(self.elements) < self.items:
             self.scroll_down()
@@ -212,20 +211,19 @@ class Downloader():
         of the images we need this function is used to get those links from the 
         HTML tags of the image"""
 
-        # sing beautiful soup to parse the HTML source
+        # using beautiful soup to parse the HTML source
         soup = BeautifulSoup(self.driver.page_source,"html.parser")
 
         # shutting down the driver after use
         self.driver.quit()
 
         #getting a tags to get image links
-        a_tags = soup.findAll("a",class_="wXeWr islib nfEiy mM5pbd",limit=limit)
+        a_tags = soup.findAll("a",class_="wXeWr islib nfEiy",limit=limit)
         self._filtering_links(a_tags)
     
     def _filtering_links(self,a_tags):
         """links that we scrape from the google page is not which we can directly
         use to get the image from the web. so we need to filter the image link."""
-        
         self.links = []
         for i in a_tags:
             # getting href attribute and slicing the string to get rid of unneccesary part
@@ -237,7 +235,6 @@ class Downloader():
             symbols = {"%3A":":","%2F":"/","%3F":"?","%3D":"=","%26":"&","%25":"%"}
             for keys,values in symbols.items():
                 img_link = img_link.replace(keys,values)
-
             self.links.append(img_link)
         
         print("Done...")
@@ -256,6 +253,8 @@ class Downloader():
 
 
     def download_images(self):
+        """after we have all the links to the images we download them into our system"""
+
         while True:
             res = input(f"Do you want proceed with downloading {len(self.elements)} images?(y/n)")
             if res == "y":
@@ -285,13 +284,13 @@ class Downloader():
             else:
                 print("Invalid input! respond with 'y' or 'n' only.")
 
-
             
 if __name__ == "__main__":
     search = input("What you want to download: ")
     items = int(input("How many images you want to download: "))
     download = Downloader(search,items)
     download.download_images()
+
 
 
 
